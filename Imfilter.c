@@ -26,7 +26,7 @@ BoundaryOptions - performs multidimensional filtering
 Output:
  N-D filtering of multidimensional images
 */
-TipoArreglo imfilter(TipoImagenSR Xn, TipoKernel Hpsf, char* BoundaryOptions)
+TipoImagenSR imfilter(TipoImagenSR Xn, TipoKernel Hpsf, char *BoundaryOptions)
 {
 /*
 Let's first create a small testimage from the built-in peppers image

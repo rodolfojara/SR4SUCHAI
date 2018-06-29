@@ -12,9 +12,12 @@ Output:
 The backprojection of the sign of the residual error
 */
 
-TipoKernel GradientRegulization(TipoImagen Xn, int PVENTANA, int ALPHA)
+TipoImagenSR sign(TipoImagenSR X);
+
+TipoKernel GradientRegulization(TipoImagen Xn)
 {
-	tamano =sizeof(Xn);
+	int tamano;
+	tamano = sizeof(Xn);
 	double G[tamano][tamano];
 
 	Xpad = padarray(Xn, [PVENTANA PVENTANA], 'symmetric'); // crea una version inflada de Xn asi la operacion de desplazamiento es mas simple

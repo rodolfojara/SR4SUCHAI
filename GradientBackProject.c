@@ -13,18 +13,23 @@ Output:
 The backprojection of the sign of the residual error
 */
 
+TipoImagenHR imfilter(TipoImagenHR Xn, TipoKernel Hpsf, char *tipo);
+
+TipoImagenSR sign(TipoImagenSR X);
+
 TipoKernel GradientBackProject(TipoImagen Xn, TipoImagenLR LR, TipoImagenLR Fmot, TipoKernel Hpsf, int Dres)
 {
+  
+  TipoImagenLR HRsd, Zn, G;
   // The shift and blur are comutative, so to improve runtime, we first filter the HR image
   Zn = imfilter(Xn, Hpsf, 'Symmetric'); // Blur the current HR estimate	
 
   // Allocate shifted and decimated HR image
   HRsd = zeros(size(LR)); // matriz de ceros
 
-  int k;
   int kMax = size(LR,3); // Numero de imagenes
 
-  for (k=1; k<=kMax; k++ )
+  for (int k=1; k<=kMax; k++ )
   {
 	  HRsd(:,:,k) = Zn(Fmot(k,2):RESOLUTIO(size(LR,1)-1)*RESOLUTIO+Fmot(k,2), Fmot(k,1):RESOLUTIO:(size(LR,2)-1)*RESOLUTIO+Fmot(k,1));
   }
