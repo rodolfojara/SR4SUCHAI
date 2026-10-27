@@ -32,6 +32,8 @@ The thesis presentation identified gradient calculations and weighted gradient c
 
 ## Historical evaluation
 
+A concise visual summary of the thesis evidence, including sample runtime and memory measurements and the reason ROBUST was selected, is available in [`docs/robust-selection-results.md`](docs/robust-selection-results.md). The page includes purpose-made SVG figures styled for this repository; the figures summarize the thesis presentation rather than claim new experimental results.
+
 The defense presentation reports approximate resolution values of 2 for IBP, 3 for POCS and 4 for ROBUST in its suggested-use-case table, and associates ROBUST with in-orbit processing under the stated low-compute / seconds-scale response constraints. The presentation also describes PSNR, runtime, memory and visual comparisons. This README does not claim unreported numerical margins.
 
 ## Status
