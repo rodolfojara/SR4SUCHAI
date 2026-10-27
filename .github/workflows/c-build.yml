@@ -27,6 +27,7 @@ jobs:
         run: |
           gcc -std=c99 -Wall -Wextra -Wpedantic -Werror -Isrc \
             tests/test_core.c src/image.c src/GradientRegulization.c \
+            src/GradientBackProject.c src/FastGradientBackProject.c \
             src/MedianAndShift.c -lm -o test_core
       - name: Run core tests
         run: ./test_core
