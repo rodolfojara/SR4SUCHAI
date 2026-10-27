@@ -2,11 +2,10 @@
 
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 #define CHECK(condition, message) do { \
     if (!(condition)) { \
-        fprintf(stderr, "FAIL: %s (line %d)\n", message, __LINE__); \
+        fprintf(stderr, "FAIL: %s (line %d)\\n", message, __LINE__); \
         return 1; \
     } \
 } while (0)
@@ -42,7 +41,8 @@ int main(void)
     SRImageStack phase_stack = {1, 1, 4, phase_pixels};
     size_t i;
 
-    CHECK(image.data != NULL && identity.data != NULL && estimate.data != NULL &&\n          baseline.data != NULL && normalization.data != NULL, "image allocation");
+    CHECK(image.data != NULL && identity.data != NULL && estimate.data != NULL &&
+          baseline.data != NULL && normalization.data != NULL, "image allocation");
     image.data[0] = 1.0;
     image.data[1] = 2.0;
     image.data[2] = 3.0;
@@ -55,7 +55,27 @@ int main(void)
         CHECK(near(filtered.data[i], image.data[i]), "identity filter preserves pixels");
     }
 
-    estimate.data[0] = 2.0; estimate.data[1] = 4.0;\n    baseline.data[0] = 1.0; baseline.data[1] = 5.0;\n    normalization.data[0] = 1.0; normalization.data[1] = 1.0;\n    CHECK(sr_gradient_back_project(&estimate, &observed, &shifts, &identity, 1,\n                                   &backprojected),\n          "single-frame back-projection succeeds");\n    CHECK(near(backprojected.data[0], 1.0) && near(backprojected.data[1], -1.0),\n          "back-projection matches sign residual for identity PSF at scale one");\n    CHECK(sr_fast_gradient_back_project(&estimate, &baseline, &normalization,\n                                        &identity, &fast_backprojected),\n          "fast back-projection succeeds");\n    CHECK(near(fast_backprojected.data[0], 1.0) &&\n          near(fast_backprojected.data[1], -1.0),\n          "fast back-projection matches weighted sign residual for identity PSF");\n\n    CHECK(near(sr_sign(-4.0), -1.0) && near(sr_sign(0.0), 0.0) &&
+    estimate.data[0] = 2.0;
+    estimate.data[1] = 4.0;
+    baseline.data[0] = 1.0;
+    baseline.data[1] = 5.0;
+    normalization.data[0] = 1.0;
+    normalization.data[1] = 1.0;
+
+    CHECK(sr_gradient_back_project(&estimate, &observed, &shifts, &identity, 1,
+                                   &backprojected),
+          "single-frame back-projection succeeds");
+    CHECK(near(backprojected.data[0], 1.0) && near(backprojected.data[1], -1.0),
+          "back-projection matches sign residual for identity PSF at scale one");
+
+    CHECK(sr_fast_gradient_back_project(&estimate, &baseline, &normalization,
+                                        &identity, &fast_backprojected),
+          "fast back-projection succeeds");
+    CHECK(near(fast_backprojected.data[0], 1.0) &&
+          near(fast_backprojected.data[1], -1.0),
+          "fast back-projection matches weighted sign residual for identity PSF");
+
+    CHECK(near(sr_sign(-4.0), -1.0) && near(sr_sign(0.0), 0.0) &&
           near(sr_sign(4.0), 1.0), "sign matches MATLAB sign for finite values");
 
     for (i = 0; i < 4; ++i) image.data[i] = 7.0;
