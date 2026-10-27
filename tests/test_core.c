@@ -27,6 +27,12 @@ int main(void)
     SRShiftList shifts = {1, &shift};
     SRImage z = {0, 0, NULL};
     SRImage a = {0, 0, NULL};
+    SRImage z2 = {0, 0, NULL};
+    SRImage a2 = {0, 0, NULL};
+    SRShift phase_shifts[4] = {{0, 0}, {1, 0}, {0, 1}, {1, 1}};
+    SRShiftList phases = {4, phase_shifts};
+    double phase_pixels[4] = {10.0, 20.0, 30.0, 40.0};
+    SRImageStack phase_stack = {1, 1, 4, phase_pixels};
     size_t i;
 
     CHECK(image.data != NULL && identity.data != NULL, "image allocation");
@@ -64,12 +70,23 @@ int main(void)
         CHECK(near(a.data[i], 1.0), "single-frame normalization is one");
     }
 
+    CHECK(sr_median_and_shift(&phase_stack, &phases, 2, 2, 2, &z2, &a2),
+          "two-times median initializer succeeds for four displacement phases");
+    CHECK(near(z2.data[0], 10.0) && near(z2.data[1], 20.0) &&
+          near(z2.data[2], 30.0) && near(z2.data[3], 40.0),
+          "displacement x maps to columns and y maps to rows");
+    for (i = 0; i < 4; ++i) {
+        CHECK(near(a2.data[i], 1.0), "each unique phase has unit normalization");
+    }
+
     sr_image_destroy(&image);
     sr_image_destroy(&identity);
     sr_image_destroy(&filtered);
     sr_image_destroy(&regularized);
     sr_image_destroy(&z);
     sr_image_destroy(&a);
+    sr_image_destroy(&z2);
+    sr_image_destroy(&a2);
     puts("All core tests passed.");
     return 0;
 }
