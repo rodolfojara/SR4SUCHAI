@@ -55,14 +55,16 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
 
     for (i = 0; i < high_rows * high_cols; ++i) normalization->data[i] = 1.0;
 
-    /* MATLAB groups D values from r through 2r-1; in C those offsets are
-       r-1 through 2r-2. Each distinct displacement fills one phase grid. */
-    for (x = r - 1; x < 2 * r - 1; ++x) {
-        for (y = r - 1; y < 2 * r - 1; ++y) {
+    /* MATLAB displacement values run from 1..r in each axis. The C API
+       stores zero-based offsets, so each phase is in [0, r-1]. x is column
+       displacement and y is row displacement, matching MATLAB D(:,1), D(:,2). */
+    for (x = 0; x < r; ++x) {
+        for (y = 0; y < r; ++y) {
             size_t count = 0;
-            size_t phase = (x - (r - 1)) * r + (y - (r - 1));
+            size_t phase = y * r + x;
             for (frame = 0; frame < shifts->count; ++frame) {
-                if (shifts->items[frame].x == x && shifts->items[frame].y == y) {
+                if (shifts->items[frame].x == x &&
+                    shifts->items[frame].y == y) {
                     ++count;
                 }
             }
@@ -117,7 +119,7 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
 
     for (x = 0; x < r; ++x) {
         for (y = 0; y < r; ++y) {
-            size_t phase = x * r + y;
+            size_t phase = y * r + x;
             if (known[phase]) continue;
             for (row = y; row < high_rows; row += r) {
                 for (col = x; col < high_cols; col += r) {
