@@ -1,6 +1,7 @@
 #include "robust_sr.h"
 
 #include <math.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 static int compare_double(const void *left, const void *right)
@@ -41,8 +42,8 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
 
     r = resolution_factor;
     max_frames = low_resolution->frames;
-    value_capacity = (r > 0 && r > max_frames / r) ? 0 : r * r;
-    if (value_capacity == 0) goto fail;
+    if (r > SIZE_MAX / r) goto fail;
+    value_capacity = r * r;
     if (value_capacity < max_frames) value_capacity = max_frames;
     values = (double *)malloc(value_capacity * sizeof(double));
     known = (unsigned char *)calloc(r * r, sizeof(unsigned char));
