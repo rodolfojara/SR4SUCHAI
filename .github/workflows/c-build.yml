@@ -1,4 +1,4 @@
-name: C build check
+name: C build and core tests
 
 on:
   push:
@@ -9,13 +9,13 @@ on:
       - master
 
 jobs:
-  compile:
+  compile-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Compile ROBUST modules with warnings enabled
+      - name: Compile production modules
         run: |
-          gcc -std=c99 -Wall -Wextra -Wpedantic -Isrc -c \
+          gcc -std=c99 -Wall -Wextra -Wpedantic -Werror -Isrc -c \
             src/image.c \
             src/GradientRegulization.c \
             src/GradientBackProject.c \
@@ -23,3 +23,10 @@ jobs:
             src/MedianAndShift.c \
             src/RobustSR.c \
             src/FastRobustSR.c
+      - name: Build core tests
+        run: |
+          gcc -std=c99 -Wall -Wextra -Wpedantic -Werror -Isrc \
+            tests/test_core.c src/image.c src/GradientRegulization.c \
+            src/MedianAndShift.c -lm -o test_core
+      - name: Run core tests
+        run: ./test_core
