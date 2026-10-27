@@ -12,7 +12,7 @@ Initial modules now present:
 - `FastRobustSR.c`: iterative fast ROBUST solver.
 - `robust_sr.h`: explicit C data structures and function interfaces.
 
-The modules compile together with GCC in C99 mode with `-Wall -Wextra -Wpedantic` enabled. This is only a compilation check; numerical equivalence to MATLAB has not yet been established.
+The modules compile together with GCC in C99 mode with `-Wall -Wextra -Wpedantic -Werror` enabled. Basic tests cover image allocation/filtering, sign behavior, a constant-image regularization case, and the row/column mapping of median-and-shift displacement phases. These are smoke tests only; numerical equivalence to MATLAB has not yet been established.
 
 Rules:
 - Explicit image dimensions and ownership; no implicit MATLAB-style array operations.
