@@ -62,6 +62,15 @@ int sr_gradient_back_project(const SRImage *estimate,
                              size_t resolution_factor,
                              SRImage *gradient);
 
+/* MATLAB RobustSR.m. */
+int sr_robust_sr(const SRImageStack *low_resolution,
+                 const SRShiftList *shifts,
+                 const SRImage *initial_estimate,
+                 size_t resolution_factor,
+                 const SRImage *psf,
+                 const SRRobustProps *props,
+                 SRImage *estimate);
+
 /* MATLAB FastGradientBackProject.m. */
 int sr_fast_gradient_back_project(const SRImage *estimate,
                                   const SRImage *blurred_initial,
