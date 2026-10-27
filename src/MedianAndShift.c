@@ -30,7 +30,7 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
     unsigned char *known = NULL;
     double *values = NULL;
     SRImage median_filtered = {0, 0, NULL};
-    size_t max_frames;
+    size_t max_frames, value_capacity;
 
     if (low_resolution == NULL || shifts == NULL || blurred_initial == NULL ||
         normalization == NULL || low_resolution->data == NULL ||
@@ -41,7 +41,10 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
 
     r = resolution_factor;
     max_frames = low_resolution->frames;
-    values = (double *)malloc(max_frames * sizeof(double));
+    value_capacity = (r > 0 && r > max_frames / r) ? 0 : r * r;
+    if (value_capacity == 0) goto fail;
+    if (value_capacity < max_frames) value_capacity = max_frames;
+    values = (double *)malloc(value_capacity * sizeof(double));
     known = (unsigned char *)calloc(r * r, sizeof(unsigned char));
     if (values == NULL || known == NULL) goto fail;
 
