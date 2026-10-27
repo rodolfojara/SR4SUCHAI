@@ -89,7 +89,12 @@ int main(void)
     sr_image_destroy(&image);
     sr_image_destroy(&identity);
     sr_image_destroy(&filtered);
-    sr_image_destroy(&regularized);\n    sr_image_destroy(&estimate);\n    sr_image_destroy(&backprojected);\n    sr_image_destroy(&fast_backprojected);\n    sr_image_destroy(&baseline);\n    sr_image_destroy(&normalization);
+    sr_image_destroy(&regularized);
+    sr_image_destroy(&estimate);
+    sr_image_destroy(&backprojected);
+    sr_image_destroy(&fast_backprojected);
+    sr_image_destroy(&baseline);
+    sr_image_destroy(&normalization);
     sr_image_destroy(&z);
     sr_image_destroy(&a);
     sr_image_destroy(&z2);
