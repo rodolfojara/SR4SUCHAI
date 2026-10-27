@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="480" viewBox="0 0 1000 480">
+<rect width="1000" height="480" rx="18" fill="#f8fafc"/>
+<text x="500" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#172554">Reported runtime — sample images</text>
+<text x="500" y="62" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#64748b">Seconds; values transcribed from defense presentation slide 19 · common scale, 0–7 s</text>
+<g font-family="Arial,sans-serif" font-size="13" fill="#334155">
+<text x="210" y="108" text-anchor="middle" font-size="16" font-weight="700">eolian · 51×51</text>
+<text x="500" y="108" text-anchor="middle" font-size="16" font-weight="700">malvinas · 64×64</text>
+<text x="790" y="108" text-anchor="middle" font-size="16" font-weight="700">plazaltalia · 100×100</text>
+</g>
+<g stroke="#cbd5e1" stroke-width="1"><line x1="90" y1="380" x2="330" y2="380"/><line x1="380" y1="380" x2="620" y2="380"/><line x1="670" y1="380" x2="910" y2="380"/></g>
+<g font-family="Arial,sans-serif" font-size="12" fill="#334155">
+<rect x="115" y="372.5" width="42" height="7.5" fill="#64748b"/><rect x="170" y="214.9" width="42" height="165.1" fill="#d97706"/><rect x="225" y="368.6" width="42" height="11.4" fill="#15803d"/>
+<text x="136" y="363" text-anchor="middle">0.187</text><text x="191" y="207" text-anchor="middle">4.128</text><text x="246" y="359" text-anchor="middle">0.284</text>
+<text x="136" y="405" text-anchor="middle">IBP</text><text x="191" y="405" text-anchor="middle">POCS</text><text x="246" y="405" text-anchor="middle">ROBUST</text>
+<rect x="405" y="366.6" width="42" height="13.4" fill="#64748b"/><rect x="460" y="101.8" width="42" height="278.2" fill="#d97706"/><rect x="515" y="370.4" width="42" height="9.6" fill="#15803d"/>
+<text x="426" y="357" text-anchor="middle">0.335</text><text x="481" y="94" text-anchor="middle">6.954</text><text x="536" y="361" text-anchor="middle">0.240</text>
+<text x="426" y="405" text-anchor="middle">IBP</text><text x="481" y="405" text-anchor="middle">POCS</text><text x="536" y="405" text-anchor="middle">ROBUST</text>
+<rect x="695" y="344.7" width="42" height="35.3" fill="#64748b"/><rect x="750" y="214.5" width="42" height="165.5" fill="#d97706"/><rect x="805" y="354" width="42" height="26" fill="#15803d"/>
+<text x="716" y="336" text-anchor="middle">0.882</text><text x="771" y="207" text-anchor="middle">4.137</text><text x="826" y="345" text-anchor="middle">0.651</text>
+<text x="716" y="405" text-anchor="middle">IBP</text><text x="771" y="405" text-anchor="middle">POCS</text><text x="826" y="405" text-anchor="middle">ROBUST</text>
+</g>
+<g font-family="Arial,sans-serif" font-size="13" fill="#475569"><rect x="300" y="438" width="15" height="15" fill="#64748b"/><text x="322" y="450">IBP</text><rect x="380" y="438" width="15" height="15" fill="#d97706"/><text x="402" y="450">POCS</text><rect x="470" y="438" width="15" height="15" fill="#15803d"/><text x="492" y="450">ROBUST</text></g>
+</svg>

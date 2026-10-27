@@ -2,94 +2,40 @@
 
 ## Super-resolution algorithms for resource-constrained nanosatellite applications
 
-This repository contains a work-in-progress C implementation/port of super-resolution algorithms evaluated in the context of the **SUCHAI / CubeSat** project.
+This repository documents work to evaluate super-resolution algorithms for nanosatellite imagery and to explore a C implementation suitable for a resource-constrained platform.
 
-The original work explored how super-resolution could improve image resolution while considering the constraints of a nanosatellite environment.
+The thesis *Implementación y evaluación de algoritmos de súper resolución para imágenes tomadas con nano satélites* (Universidad de Chile, July 2018) evaluated IBP, POCS and ROBUST. The defense presentation selected ROBUST as the most promising candidate for the described in-orbit use case, considering image-resolution gain and CubeSat computing constraints.
 
-## Objective
+## Current rewrite plan
 
-Evaluate and implement super-resolution approaches suitable for a resource-constrained space platform, considering factors such as:
+The current rewrite branch starts from the original MATLAB algorithm sources and builds a new C implementation from scratch.
 
-- image quality;
-- resolution increase;
-- memory requirements;
-- computational/runtime requirements.
+- `reference/matlab/robust/`: authoritative MATLAB reference sources.
+- `src/`: clean C implementation being developed from those references.
+- `archive/first-version/`: earlier C translation attempts, preserved only as historical reference.
 
-The work compared alternative algorithms and selected **ROBUST** as the most promising candidate for the intended nanosatellite use case.
+The archived C files are not part of the new implementation. We will compare the old and new attempts only after the translation is complete, rather than spending time repairing the old attempt file by file.
 
-## Algorithm evaluation and selection
+## Engineering principles
 
-The thesis, *Implementación y evaluación de algoritmos de súper resolución para imágenes tomadas con nano satélites* (Universidad de Chile, July 2018), evaluated three spatial-domain approaches:
+- Preserve the original algorithm's intent and operation order where possible.
+- Make dimensions, indexing, image boundaries and memory ownership explicit in C.
+- Record any necessary difference from MATLAB rather than silently changing behavior.
+- Compile and test modules before treating them as complete.
+- Do not describe this code as flight-ready or validated for an actual spacecraft.
 
-- **IBP** — Iterative Back Projection;
-- **POCS** — Projection Onto Convex Sets;
-- **ROBUST** — the method by Farsiu, Robinson, Elad and Milanfar.
+## Algorithm outline
 
-The defense presentation describes the selection in the context of CubeSat constraints, rather than image quality alone. Its suggested-use-case table reports approximate resolution values of **2 for IBP, 3 for POCS and 4 for ROBUST**, with low-computing-capacity and response-time constraints on the order of seconds; ROBUST is assigned the in-orbit scenario (defense presentation, slide 26).
+ROBUST iteratively updates a high-resolution estimate using two terms: a back-projected sign of the residual between simulated and observed low-resolution images, and a regularization gradient. The update follows steepest descent using the parameters defined by the MATLAB implementation.
 
-The evaluation also considered PSNR-based image-quality comparisons, runtime, memory use and visual inspection (slides 19–24). The available presentation text does not provide the underlying numerical results for every comparison, so this README does not claim a specific PSNR margin or a quantified memory/runtime advantage.
+The thesis presentation identified gradient calculations and weighted gradient contributions as challenging parts of the C port. It also identified explicit image-matrix handling and JPEG input/output as engineering requirements.
 
-The next engineering step identified in the defense was to port the remaining ROBUST functions to C for potential use in **SUCHAI 2 and later missions**. The presentation calls out two particularly challenging areas: calculating filter and cost-function gradients, and combining their weighted contributions. Image-matrix handling and JPEG input/output were also identified as implementation needs (slides 27 and 29).
+## Historical evaluation
 
-## Algorithms and implementation
+A concise visual summary of the thesis evidence, including sample runtime and memory measurements and the reason ROBUST was selected, is available in [`docs/robust-selection-results.md`](docs/robust-selection-results.md). The page includes purpose-made SVG figures styled for this repository; the figures summarize the thesis presentation rather than claim new experimental results.
 
-The repository contains C source files related to:
+The defense presentation reports approximate resolution values of 2 for IBP, 3 for POCS and 4 for ROBUST in its suggested-use-case table, and associates ROBUST with in-orbit processing under the stated low-compute / seconds-scale response constraints. The presentation also describes PSNR, runtime, memory and visual comparisons. This README does not claim unreported numerical margins.
 
-- robust super-resolution (`RobustSR.c`);
-- fast robust super-resolution (`FastRobustSR.c`);
-- gradient back-projection (`GradientBackProject.c`);
-- regularization (`GradientRegulization.c`);
-- median filtering and image alignment (`Median.c`, `Medfilt2.c`, `MedianAndShift.c`);
-- image operations such as flipping and filtering.
+## Status
 
-The implementation follows an iterative estimation approach in which a high-resolution estimate is updated using gradient/back-projection and regularization terms.
-
-A simplified view of the processing flow is:
-
-```text
-Low-resolution image sequence
-            |
-            v
-   Alignment / initial HR
-            |
-            v
- Gradient Back-Projection
-            +
-       Regularization
-            |
-            v
-     Iterative HR update
-            |
-            v
-    High-resolution estimate
-```
-
-## Current status
-
-**Work in progress / incomplete port.**
-
-The repository preserves the state of the C implementation developed during the project. Some components still contain incomplete or MATLAB-like constructs and should not be interpreted as production-ready CubeSat flight software.
-
-The repository is therefore presented as an engineering and research artifact rather than as a finished flight implementation.
-
-## Relation to the research work
-
-This repository is associated with the thesis *Implementación y evaluación de algoritmos de súper resolución para imágenes tomadas con nano satélites* (2018). The work evaluated algorithms and considered how their computational demands and achievable resolution related to the constraints of nanosatellite imaging.
-
-The choice of ROBUST is documented here as the thesis project's engineering selection. It should not be read as a claim that the current C files form a completed, flight-qualified implementation.
-
-## Why this repository is relevant
-
-This project demonstrates work at the intersection of:
-
-- Space Systems Engineering
-- Image Processing
-- Super-Resolution
-- C programming
-- Algorithm evaluation
-- Resource-constrained computing
-- Technical trade-off and selection
-
-## Future work
-
-Possible next steps include completing the C port, validating it against reference results, benchmarking memory/runtime requirements, documenting the test methodology, and adding reproducible examples. The defense also identified evaluating convolutional neural networks and studying limits of super-resolution as possible future research directions.
+**Initial C port — smoke-tested, not yet numerically validated.** The legacy C sources have been moved to `archive/first-version/`. The clean C rewrite includes image storage/filtering, the regularization gradient, both back-projection gradients, the median-and-shift initializer, and both solver loops. GitHub Actions compiles the modules with strict warnings and runs small tests for core operations. These tests do not establish full numerical equivalence to MATLAB; treat this as a documented prototype, not flight-ready software.
