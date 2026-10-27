@@ -1,6 +1,8 @@
 #include "robust_sr.h"
 
+#include <limits.h>
 #include <math.h>
+#include <stdlib.h>
 
 /*
  * Translation of reference/matlab/robust/GradientRegulization.m.
