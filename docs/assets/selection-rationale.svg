@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="360" viewBox="0 0 1000 360">
+<rect width="1000" height="360" rx="18" fill="#f7f8fc"/>
+<text x="500" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#172554">Why ROBUST was selected</text>
+<text x="500" y="68" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#475569">Evidence reported in the 2018 thesis and defense presentation</text>
+<g font-family="Arial,sans-serif">
+<rect x="28" y="100" width="294" height="184" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<rect x="352" y="100" width="294" height="184" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<rect x="676" y="100" width="296" height="184" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="175" y="133" text-anchor="middle" font-size="18" font-weight="700" fill="#1d4ed8">Image quality</text>
+<text x="175" y="164" text-anchor="middle" font-size="15" fill="#334155">100-image dataset</text>
+<text x="175" y="188" text-anchor="middle" font-size="15" fill="#334155">PSNR heatmaps + boxplot</text>
+<text x="175" y="226" text-anchor="middle" font-size="17" font-weight="700" fill="#15803d">ROBUST: strongest</text>
+<text x="175" y="247" text-anchor="middle" font-size="17" font-weight="700" fill="#15803d">overall PSNR results</text>
+<text x="499" y="133" text-anchor="middle" font-size="18" font-weight="700" fill="#1d4ed8">Runtime</text>
+<text x="499" y="164" text-anchor="middle" font-size="15" fill="#334155">Faster than POCS in</text>
+<text x="499" y="185" text-anchor="middle" font-size="15" fill="#334155">the three shown examples</text>
+<text x="499" y="226" text-anchor="middle" font-size="17" font-weight="700" fill="#15803d">Seconds-scale</text>
+<text x="499" y="247" text-anchor="middle" font-size="17" font-weight="700" fill="#15803d">in these examples</text>
+<text x="824" y="133" text-anchor="middle" font-size="18" font-weight="700" fill="#1d4ed8">Memory + resolution</text>
+<text x="824" y="164" text-anchor="middle" font-size="15" fill="#334155">Moderate memory in</text>
+<text x="824" y="185" text-anchor="middle" font-size="15" fill="#334155">the shown cases</text>
+<text x="824" y="226" text-anchor="middle" font-size="17" font-weight="700" fill="#15803d">Reported factor ≈ 4</text>
+<text x="824" y="247" text-anchor="middle" font-size="13" fill="#64748b">vs. IBP ≈ 2, POCS ≈ 3</text>
+</g>
+<text x="500" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#64748b">Historical evaluation results; not measurements of this C rewrite or flight hardware.</text>
+</svg>
