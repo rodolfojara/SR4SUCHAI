@@ -45,6 +45,7 @@ SRImage sr_image_create(size_t rows, size_t cols);
 void sr_image_destroy(SRImage *image);
 SRImage sr_image_clone(const SRImage *image);
 double sr_image_get_symmetric(const SRImage *image, long row, long col);
+int sr_image_filter_symmetric(const SRImage *image, const SRImage *kernel, SRImage *filtered);
 double sr_sign(double value);
 
 /* MATLAB GradientRegulization.m, translated to explicit C loops. */
