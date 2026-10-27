@@ -92,8 +92,8 @@ int sr_image_filter_symmetric(const SRImage *image,
     *filtered = sr_image_create(image->rows, image->cols);
     if (filtered->data == NULL) return 0;
 
-    row_anchor = (long)(kernel->rows / 2);
-    col_anchor = (long)(kernel->cols / 2);
+    row_anchor = (long)((kernel->rows - 1) / 2);
+    col_anchor = (long)((kernel->cols - 1) / 2);
     for (row = 0; row < image->rows; ++row) {
         for (col = 0; col < image->cols; ++col) {
             double sum = 0.0;
