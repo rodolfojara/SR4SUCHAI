@@ -71,6 +71,23 @@ int sr_robust_sr(const SRImageStack *low_resolution,
                  const SRRobustProps *props,
                  SRImage *estimate);
 
+/* MATLAB MedianAndShift.m. */
+int sr_median_and_shift(const SRImageStack *low_resolution,
+                        const SRShiftList *shifts,
+                        size_t high_rows,
+                        size_t high_cols,
+                        size_t resolution_factor,
+                        SRImage *blurred_initial,
+                        SRImage *normalization);
+
+/* MATLAB FastRobustSR.m. */
+int sr_fast_robust_sr(const SRImageStack *low_resolution,
+                      const SRShiftList *shifts,
+                      size_t resolution_factor,
+                      const SRImage *psf,
+                      const SRRobustProps *props,
+                      SRImage *estimate);
+
 /* MATLAB FastGradientBackProject.m. */
 int sr_fast_gradient_back_project(const SRImage *estimate,
                                   const SRImage *blurred_initial,
