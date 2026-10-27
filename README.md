@@ -36,4 +36,4 @@ The defense presentation reports approximate resolution values of 2 for IBP, 3 f
 
 ## Status
 
-**Rewrite in progress.** The legacy C sources have been moved to `archive/first-version/`. The clean C rewrite has begun: image storage/filtering, the regularization gradient, both back-projection gradients, the median-and-shift initializer, and the two solver loops have initial implementations. Compilation and numerical parity checks are still pending; do not treat the port as complete or validated.
+**Initial C port — smoke-tested, not yet numerically validated.** The legacy C sources have been moved to `archive/first-version/`. The clean C rewrite includes image storage/filtering, the regularization gradient, both back-projection gradients, the median-and-shift initializer, and both solver loops. GitHub Actions compiles the modules with strict warnings and runs small tests for core operations. These tests do not establish full numerical equivalence to MATLAB; treat this as a documented prototype, not flight-ready software.
