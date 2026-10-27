@@ -45,6 +45,7 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
     if (r > SIZE_MAX / r) goto fail;
     value_capacity = r * r;
     if (value_capacity < max_frames) value_capacity = max_frames;
+    if (value_capacity > SIZE_MAX / sizeof(double)) goto fail;
     values = (double *)malloc(value_capacity * sizeof(double));
     known = (unsigned char *)calloc(r * r, sizeof(unsigned char));
     if (values == NULL || known == NULL) goto fail;
