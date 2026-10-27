@@ -1,0 +1,25 @@
+name: C build check
+
+on:
+  push:
+    branches:
+      - rewrite/robust-from-matlab
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile ROBUST modules with warnings enabled
+        run: |
+          gcc -std=c99 -Wall -Wextra -Wpedantic -Isrc -c \
+            src/image.c \
+            src/GradientRegulization.c \
+            src/GradientBackProject.c \
+            src/FastGradientBackProject.c \
+            src/MedianAndShift.c \
+            src/RobustSR.c \
+            src/FastRobustSR.c
