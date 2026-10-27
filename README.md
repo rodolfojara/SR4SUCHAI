@@ -11,11 +11,25 @@ The original work explored how super-resolution could improve image resolution w
 Evaluate and implement super-resolution approaches suitable for a resource-constrained space platform, considering factors such as:
 
 - image quality;
-- resolution increase factor;
+- resolution increase;
 - memory requirements;
 - computational/runtime requirements.
 
-The algorithmic work included the comparison of alternatives and the selection of an approach with lower resource requirements for the intended CubeSat context.
+The work compared alternative algorithms and selected **ROBUST** as the most promising candidate for the intended nanosatellite use case.
+
+## Algorithm evaluation and selection
+
+The thesis, *Implementación y evaluación de algoritmos de súper resolución para imágenes tomadas con nano satélites* (Universidad de Chile, July 2018), evaluated three spatial-domain approaches:
+
+- **IBP** — Iterative Back Projection;
+- **POCS** — Projection Onto Convex Sets;
+- **ROBUST** — the method by Farsiu, Robinson, Elad and Milanfar.
+
+The defense presentation describes the selection in the context of CubeSat constraints, rather than image quality alone. Its suggested-use-case table reports approximate resolution values of **2 for IBP, 3 for POCS and 4 for ROBUST**, with low-computing-capacity and response-time constraints on the order of seconds; ROBUST is assigned the in-orbit scenario (defense presentation, slide 26).
+
+The evaluation also considered PSNR-based image-quality comparisons, runtime, memory use and visual inspection (slides 19–24). The available presentation text does not provide the underlying numerical results for every comparison, so this README does not claim a specific PSNR margin or a quantified memory/runtime advantage.
+
+The next engineering step identified in the defense was to port the remaining ROBUST functions to C for potential use in **SUCHAI 2 and later missions**. The presentation calls out two particularly challenging areas: calculating filter and cost-function gradients, and combining their weighted contributions. Image-matrix handling and JPEG input/output were also identified as implementation needs (slides 27 and 29).
 
 ## Algorithms and implementation
 
@@ -60,7 +74,9 @@ The repository is therefore presented as an engineering and research artifact ra
 
 ## Relation to the research work
 
-The project is related to the thesis work on the **implementation and evaluation of super-resolution algorithms for images acquired by nanosatellites**. The engineering problem was not only algorithmic: the alternatives had to be considered in the context of the limited computational resources available on a CubeSat.
+This repository is associated with the thesis *Implementación y evaluación de algoritmos de súper resolución para imágenes tomadas con nano satélites* (2018). The work evaluated algorithms and considered how their computational demands and achievable resolution related to the constraints of nanosatellite imaging.
+
+The choice of ROBUST is documented here as the thesis project's engineering selection. It should not be read as a claim that the current C files form a completed, flight-qualified implementation.
 
 ## Why this repository is relevant
 
@@ -76,4 +92,4 @@ This project demonstrates work at the intersection of:
 
 ## Future work
 
-Possible next steps include completing the C port, validating the implementation against reference results, benchmarking memory/runtime requirements, and documenting the selected algorithm and test methodology in greater detail.
+Possible next steps include completing the C port, validating it against reference results, benchmarking memory/runtime requirements, documenting the test methodology, and adding reproducible examples. The defense also identified evaluating convolutional neural networks and studying limits of super-resolution as possible future research directions.
