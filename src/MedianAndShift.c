@@ -56,13 +56,17 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
 
     for (i = 0; i < high_rows * high_cols; ++i) normalization->data[i] = 1.0;
 
-    /* MATLAB displacement values run from 1..r in each axis. The C API
-       stores zero-based offsets, so each phase is in [0, r-1]. x is column
-       displacement and y is row displacement, matching MATLAB D(:,1), D(:,2). */
-    for (x = 0; x < r; ++x) {
-        for (y = 0; y < r; ++y) {
+    /* Faithful index conversion from MATLAB:
+       MATLAB loops x,y = r..2r-1 and uses them as 1-based HR indices.
+       Shifts supplied by the C caller are zero-based, so these correspond
+       to x,y = r-1..2r-2. Preserve that range rather than reducing phases
+       modulo r; the original MATLAB code does not do so. */
+    for (x = r - 1; x < 2 * r - 1; ++x) {
+        for (y = r - 1; y < 2 * r - 1; ++y) {
             size_t count = 0;
-            size_t phase = y * r + x;
+            size_t phase_x = x - (r - 1);
+            size_t phase_y = y - (r - 1);
+            size_t phase = phase_x * r + phase_y;
             for (frame = 0; frame < shifts->count; ++frame) {
                 if (shifts->items[frame].x == x &&
                     shifts->items[frame].y == y) {
@@ -120,10 +124,10 @@ int sr_median_and_shift(const SRImageStack *low_resolution,
 
     for (x = 0; x < r; ++x) {
         for (y = 0; y < r; ++y) {
-            size_t phase = y * r + x;
+            size_t phase = x * r + y;
             if (known[phase]) continue;
-            for (row = y; row < high_rows; row += r) {
-                for (col = x; col < high_cols; col += r) {
+            for (row = y + r - 1; row < high_rows; row += r) {
+                for (col = x + r - 1; col < high_cols; col += r) {
                     blurred_initial->data[row * high_cols + col] =
                         median_filtered.data[row * high_cols + col];
                 }
